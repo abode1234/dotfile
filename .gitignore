@@ -1,0 +1,5 @@
+# Firefox / browser profiles
+.config/mozilla/
+
+# Large session state
+.config/session/
