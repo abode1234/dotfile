@@ -1,5 +1,5 @@
 #!/bin/bash
-WALLPAPER_DIR="$HOME/.config/backgrounds"
+WALLPAPER_DIR="$HOME/backgrounds"
 HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
 
 CHOSEN=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) \
@@ -13,11 +13,14 @@ CHOSEN_PATH="$WALLPAPER_DIR/$CHOSEN"
 
 # Apply immediately via IPC
 hyprctl hyprpaper preload "$CHOSEN_PATH"
-hyprctl hyprpaper wallpaper ",$CHOSEN_PATH"
+hyprctl hyprpaper wallpaper "HDMI-A-1,$CHOSEN_PATH"
 
 # Save choice so it persists after reboot
 cat > "$HYPRPAPER_CONF" << EOF
 ipc = on
 preload = $CHOSEN_PATH
-wallpaper = ,$CHOSEN_PATH
+wallpaper = HDMI-A-1,$CHOSEN_PATH
 EOF
+
+# Restart waybar (it sometimes hides after wallpaper change)
+pkill waybar; sleep 0.3; waybar &
