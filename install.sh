@@ -21,12 +21,7 @@ for app in "${CONFIG_APPS[@]}"; do
         continue
     fi
 
-    if [ -L "$dst" ]; then
-        echo "  skip: $app (already linked)"
-        continue
-    fi
-
-    if [ -e "$dst" ]; then
+    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
         mkdir -p "$BACKUP/.config"
         mv "$dst" "$BACKUP/.config/$app"
         echo "  backed up: ~/.config/$app"
@@ -45,12 +40,7 @@ for file in "${HOME_FILES[@]}"; do
         continue
     fi
 
-    if [ -L "$dst" ]; then
-        echo "  skip: $file (already linked)"
-        continue
-    fi
-
-    if [ -e "$dst" ]; then
+    if [ -e "$dst" ] && [ ! -L "$dst" ]; then
         mkdir -p "$BACKUP"
         mv "$dst" "$BACKUP/$file"
         echo "  backed up: ~/$file"
