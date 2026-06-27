@@ -5,7 +5,7 @@ CONFIG="$HOME/.config"
 BACKUP="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 
 # ~/.config/ directories to symlink
-CONFIG_APPS=(hypr waybar ghostty kitty rofi nvim backgrounds fontconfig gtk-3.0 gtk-4.0)
+CONFIG_APPS=(hypr waybar ghostty rofi nvim backgrounds fontconfig gtk-3.0 gtk-4.0)
 
 # Home dotfiles to symlink (relative to ~)
 HOME_FILES=(.zshrc .tmux.conf)
