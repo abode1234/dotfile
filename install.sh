@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES="$HOME/dotfiles"
+DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 CONFIG="$HOME/.config"
 BACKUP="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
 
