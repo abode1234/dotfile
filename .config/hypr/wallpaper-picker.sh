@@ -11,16 +11,23 @@ CHOSEN=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "
 
 CHOSEN_PATH="$WALLPAPER_DIR/$CHOSEN"
 
+# Detect all connected monitors
+MONITORS=$(hyprctl monitors -j | jq -r '.[].name')
+
 # Apply immediately via IPC
 hyprctl hyprpaper preload "$CHOSEN_PATH"
-hyprctl hyprpaper wallpaper "HDMI-A-1,$CHOSEN_PATH"
+for MON in $MONITORS; do
+    hyprctl hyprpaper wallpaper "$MON,$CHOSEN_PATH"
+done
 
 # Save choice so it persists after reboot
-cat > "$HYPRPAPER_CONF" << EOF
-ipc = on
-preload = $CHOSEN_PATH
-wallpaper = HDMI-A-1,$CHOSEN_PATH
-EOF
+{
+    echo "ipc = on"
+    echo "preload = $CHOSEN_PATH"
+    for MON in $MONITORS; do
+        echo "wallpaper = $MON,$CHOSEN_PATH"
+    done
+} > "$HYPRPAPER_CONF"
 
 # Restart waybar (it sometimes hides after wallpaper change)
 pkill waybar; sleep 0.3; waybar &
